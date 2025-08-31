@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const resetBtn = document.getElementById('reset-btn');
   const sourceNodeInput = document.getElementById('source-node');
   const resultsContainer = document.getElementById('results');
-  const buww=0;
   let nodes = [];
   let edges = [];
   let nodeCount = 0;
