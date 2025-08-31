@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const resetBtn = document.getElementById('reset-btn');
   const sourceNodeInput = document.getElementById('source-node');
   const resultsContainer = document.getElementById('results');
-  
+  const buww=0;
   let nodes = [];
   let edges = [];
   let nodeCount = 0;
@@ -109,12 +109,11 @@ document.addEventListener('DOMContentLoaded', function() {
     weightLabel.style.top = `${(fromNode.y + toNode.y) / 2}px`;
     
     canvas.appendChild(edge);
-    canvas.appendChild(weightLabel);
+    canvas.appendChild(weightLabel); // comment 
     
     // Store the element with the edge data
     edges.push({ from, to, weight, element: edge });
   }
-  
   runBtn.addEventListener('click', function() {
     // First, clear any previous path highlights
     for (const edge of edges) {
