@@ -1,65 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./style.css" />
-    <title>Shortest Path Using Dijkstrar</title>
-  </head>
-  <body>
-    <header>
-      <div class="title">
-        <a class= "a11" href="index.html">Smart Pathway <br><span>-Finds shortest path to each node from the source node</span></a>
-        
-        <a href="./instructions.html"
-          ><img
-            src="https://cdn4.iconfinder.com/data/icons/web-mobile1/100/Untitled-8-512.png"
-            alt=""
-        /></a>
-      </div>
-      <div class="options">
-        <div>
-          <button class="outline-btn" id="add-edge-enable" onclick="addEdges()">
-            Add edges
-          </button>
-          <button
-            class="outline-btn reset-btn"
-            onclick="resetDrawingArea()"
-            disabled
-          >
-            Clear
-          </button>
-        </div>
-        <div>
-          <input
-            type="text"
-            inputmode="numeric"
-            id="source-node"
-            placeholder="Source Node"
-          />
-          <button
-            class="outline-btn run-btn"
-            onclick="findShortestPath(this)"
-            disabled
-          >
-            Run
-          </button>
-        </div>
-      </div>
-    </header>
-    <div class="drawing-area">
-      <p class="click-instruction">Click to create node</p>
-    </div>
-    <div class="path"></div>
-  
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimal Dijkstra Visualizer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.1/gsap.min.js"></script>
-    <script src="./gsap.js"></script>
-    <script src="./script.js"></script>
-    <footer>
-      <p>Created/Developed By <span>Vansh Thakur  </span></p>
-    </footer>
-  </body>
+  <h1>Dijkstra Algorithm Visualizer</h1>
+  <p>Click canvas to add nodes (max 12). Toggle "Add Edge" to connect them.</p>
+
+  <div class="controls">
+    <input type="number" id="source-node" min="0" placeholder="Source Node">
+    <button id="add-edge-btn">Add Edge</button>
+    <button id="run-btn">Run Algorithm</button>
+    <button id="reset-btn">Reset</button>
+  </div>
+
+  <div id="canvas">
+    <p style="color: #666;">Click anywhere to add nodes</p>
+  </div>
+
+  <h2>Shortest Paths</h2>
+  <div id="results">
+    <p class="result-item">Results will be shown here.</p>
+  </div>
+
+  <footer>Developed by Vansh Thakur</footer>
+  <script src="script.js"></script>
+</body>
 </html>
