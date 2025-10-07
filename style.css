@@ -103,7 +103,7 @@ button#add-edge-btn.active {
   border-radius: 3px;
   font-size: 12px;
   transform: translate(-50%, -50%);
-  z-index: 30; /* Ensure weights are above everything */
+  z-index: 30;
 }
 
 #results {
