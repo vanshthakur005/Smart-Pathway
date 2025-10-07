@@ -1,4 +1,79 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // MinHeap (Priority Queue) implementation
+  class MinHeap {
+    constructor() {
+      this.heap = [];
+    }
+
+    getParentIndex(i) {
+      return Math.floor((i - 1) / 2);
+    }
+
+    getLeftChildIndex(i) {
+      return 2 * i + 1;
+    }
+
+    getRightChildIndex(i) {
+      return 2 * i + 2;
+    }
+
+    swap(i1, i2) {
+      [this.heap[i1], this.heap[i2]] = [this.heap[i2], this.heap[i1]];
+    }
+
+    siftUp(index) {
+      let parentIndex = this.getParentIndex(index);
+      while (index > 0 && this.heap[index].dist < this.heap[parentIndex].dist) {
+        this.swap(index, parentIndex);
+        index = parentIndex;
+        parentIndex = this.getParentIndex(index);
+      }
+    }
+
+    siftDown(index) {
+      let minIndex = index;
+      const leftIndex = this.getLeftChildIndex(index);
+      const rightIndex = this.getRightChildIndex(index);
+      const size = this.heap.length;
+
+      if (leftIndex < size && this.heap[leftIndex].dist < this.heap[minIndex].dist) {
+        minIndex = leftIndex;
+      }
+
+      if (rightIndex < size && this.heap[rightIndex].dist < this.heap[minIndex].dist) {
+        minIndex = rightIndex;
+      }
+
+      if (index !== minIndex) {
+        this.swap(index, minIndex);
+        this.siftDown(minIndex);
+      }
+    }
+
+    insert(value) {
+      this.heap.push(value);
+      this.siftUp(this.heap.length - 1);
+    }
+
+    extractMin() {
+      if (this.heap.length === 0) {
+        return null;
+      }
+      if (this.heap.length === 1) {
+        return this.heap.pop();
+      }
+      const min = this.heap[0];
+      this.heap[0] = this.heap.pop();
+      this.siftDown(0);
+      return min;
+    }
+
+    isEmpty() {
+      return this.heap.length === 0;
+    }
+  }
+
+
   const canvas = document.getElementById('canvas');
   const addEdgeBtn = document.getElementById('add-edge-btn');
   const runBtn = document.getElementById('run-btn');
@@ -108,13 +183,12 @@ document.addEventListener('DOMContentLoaded', function() {
     weightLabel.style.top = `${(fromNode.y + toNode.y) / 2}px`;
     
     canvas.appendChild(edge);
-    canvas.appendChild(weightLabel); // comment 
+    canvas.appendChild(weightLabel);
     
-    // Store the element with the edge data
     edges.push({ from, to, weight, element: edge });
   }
+  
   runBtn.addEventListener('click', function() {
-    // First, clear any previous path highlights
     for (const edge of edges) {
         edge.element.classList.remove('path');
     }
@@ -130,11 +204,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const prev = new Array(nodeCount).fill(null);
     dist[source] = 0;
     
-    const pq = [{ node: source, dist: 0 }];
+    const pq = new MinHeap();
+    pq.insert({ node: source, dist: 0 });
 
-    while(pq.length > 0) {
-        pq.sort((a, b) => a.dist - b.dist);
-        const { node: u, dist: d } = pq.shift();
+    while(!pq.isEmpty()) {
+        const { node: u, dist: d } = pq.extractMin();
 
         if (d > dist[u]) continue;
 
@@ -148,19 +222,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (alt < dist[v]) {
                     dist[v] = alt;
                     prev[v] = u;
-                    pq.push({ node: v, dist: alt });
+                    pq.insert({ node: v, dist: alt });
                 }
             }
         }
     }
     
-    // Highlight the edges in the shortest path tree
     for (let i = 0; i < nodeCount; i++) {
         if (prev[i] !== null) {
             const u = prev[i];
             const v = i;
 
-            // Find the corresponding edge element to highlight
             const edgeToHighlight = edges.find(edge =>
                 (edge.from === u && edge.to === v) || (edge.from === v && edge.to === u)
             );
